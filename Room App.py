@@ -31,7 +31,6 @@ def convert_bytes_to_list(bytesItem):
 #@param lst - takes a list of strings
 #@param pointer - word before the word we're looking for. For example, in the department data list, the pointer is "text"
 #@returns - a single list of required information in each position
-
 def convert_list_of_list_to_single_list(lst,pointer): 
    newList=[]
    for sublist in lst:
@@ -43,9 +42,11 @@ def convert_list_of_list_to_single_list(lst,pointer):
 
 #Function to create a list of course numbers
 #@param lst - takes a list of departments
-#@returns - a list of course numbers
+#@returns list_of_course_numbers - a list of course numbers
+#@returns list_of_course_exceptions - list of department codes that don't return course numbers
 def create_list_of_course_numbers(lst):
    list_of_course_numbers = [] ##[[dept code, [course numbers]]]
+   list_of_course_exceptions = []
    for item in lst:
        list_of_sub_course_numbers = [item]
        webName = SFU_DATA_WEBSITE + item
@@ -55,17 +56,19 @@ def create_list_of_course_numbers(lst):
            list_of_sub_course_numbers.append(convert_list_of_list_to_single_list(unrefined, "text"))
            #print("TRACE list_of_sub_course_numbers is", list_of_sub_course_numbers)
            list_of_course_numbers.append(list_of_sub_course_numbers)
-   return list_of_course_numbers
+       else: list_of_course_exceptions.append(item)
+   return list_of_course_numbers, list_of_course_exceptions
 
 #Function to create a list of section numbers
 #@param lst - takes a list of course numbers
 #returns - a list of section numbers
 def create_list_of_section_numbers(lst):
-   list_of_section_numbers = [] ##[[dept code, [course numbers, [section numbers]]]]
+   list_of_section_numbers = [] ##[[dept code, course number, [section numbers]]]
+   list_of_section_exceptions = []
    department_code = ""
    course_number = ""
    for item in lst:
-       temp_list_section_numbers = [] ##[dept code, [course numbers, [section numbers]]]
+       temp_list_section_numbers = [] 
        #print("TRACE temp_list_section_numbers is", temp_list_section_numbers)
        for i in range(len(item[1])):
            department_code = item[0]
@@ -75,11 +78,11 @@ def create_list_of_section_numbers(lst):
            if urlIsAlive(webName):
                unrefined = convert_bytes_to_list(read_webpage_and_get_data(webName))
                #print(unrefined[0])
-               temp_list_section_numbers = convert_list_of_list_to_single_list(unrefined,"text") ##change this so it inserts [section numbers] into the [course numbers] beside the course number corresponding to the section
-               ##temp_list_section_numbers.insert(i+1, convert_list_of_list_to_single_list(unrefined, "text")) ##change this so it inserts [section numbers] into the [course numbers] beside the course number corresponding to the section
-               ##When I make this list_of_subsection_numbers[0][1].insert(i+1, convert_list_of_list_to_single_list(unrefined, "text")), "webName = SFU_DATA_WEBSITE + item[0] + "/" + item[1][i]" returns error.. why
+               temp_list_section_numbers = convert_list_of_list_to_single_list(unrefined,"text")
                list_of_section_numbers.append([department_code,course_number,temp_list_section_numbers])
-   return list_of_section_numbers
+           else:
+               list_of_section_exceptions.append(department_code+course_number)
+   return list_of_section_numbers, list_of_section_exceptions
 
 def urlIsAlive(url):
    """
@@ -153,8 +156,15 @@ departments_in_bytes_form = read_webpage_and_get_data(SFU_DATA_WEBSITE)
 
 list_of_list_of_departments=convert_bytes_to_list(departments_in_bytes_form)
 list_of_departments=convert_list_of_list_to_single_list(list_of_list_of_departments,"text")
-list_of_courses=create_list_of_course_numbers(list_of_departments)
-list_of_sections=create_list_of_section_numbers(list_of_courses)
+
+course_output = create_list_of_course_numbers(list_of_departments)
+list_of_courses=course_output[0]
+list_of_course_exceptions = course_output[1] #for testing
+
+section_output = create_list_of_section_numbers(list_of_courses)
+list_of_sections=section_output[0]
+list_of_section_exceptions = section_output[1] #for testing
+
 final_list_for_export = []
 list_for_dictionary_key = []
 list_for_dictionary_value = []
@@ -165,9 +175,6 @@ for c in range(len(list_of_sections)):
        #print(final_list_for_export)
 write_list_of_output_lines_to_file(final_list_for_export,"list_of_everything.csv")
 #dictionary_of_courses = {k:v for k,v in zip(list_for_dictionary_key,list_for_dictionary_value)}
-
-
-
 
         
         
