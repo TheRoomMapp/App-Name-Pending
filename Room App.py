@@ -151,9 +151,9 @@ SFU_DATA_WEBSITE = "http://www.sfu.ca/bin/wcm/course-outlines?"+CURRENT_YEAR+"/"
 
 departments_in_bytes_form = read_webpage_and_get_data(SFU_DATA_WEBSITE)
 
-#list_of_list_of_departments=convert_bytes_to_list(departments_in_bytes_form)
-#list_of_departments=convert_list_of_list_to_single_list(list_of_list_of_departments,"text")
-list_of_courses=create_list_of_course_numbers(["ACMA"])
+list_of_list_of_departments=convert_bytes_to_list(departments_in_bytes_form)
+list_of_departments=convert_list_of_list_to_single_list(list_of_list_of_departments,"text")
+list_of_courses=create_list_of_course_numbers(list_of_departments)
 list_of_sections=create_list_of_section_numbers(list_of_courses)
 final_list_for_export = []
 list_for_dictionary_key = []
