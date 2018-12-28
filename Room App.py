@@ -78,7 +78,7 @@ def create_list_of_section_numbers(lst):
                temp_list_section_numbers = convert_list_of_list_to_single_list(unrefined,"text") ##change this so it inserts [section numbers] into the [course numbers] beside the course number corresponding to the section
                ##temp_list_section_numbers.insert(i+1, convert_list_of_list_to_single_list(unrefined, "text")) ##change this so it inserts [section numbers] into the [course numbers] beside the course number corresponding to the section
                ##When I make this list_of_subsection_numbers[0][1].insert(i+1, convert_list_of_list_to_single_list(unrefined, "text")), "webName = SFU_DATA_WEBSITE + item[0] + "/" + item[1][i]" returns error.. why
-               list_of_section_numbers.append([department_code+course_number,temp_list_section_numbers])
+               list_of_section_numbers.append([department_code,course_number,temp_list_section_numbers])
    return list_of_section_numbers
 
 def urlIsAlive(url):
@@ -151,17 +151,17 @@ SFU_DATA_WEBSITE = "http://www.sfu.ca/bin/wcm/course-outlines?"+CURRENT_YEAR+"/"
 
 departments_in_bytes_form = read_webpage_and_get_data(SFU_DATA_WEBSITE)
 
-list_of_list_of_departments=convert_bytes_to_list(departments_in_bytes_form)
-list_of_departments=convert_list_of_list_to_single_list(list_of_list_of_departments,"text")
-list_of_courses=create_list_of_course_numbers(list_of_departments)
+#list_of_list_of_departments=convert_bytes_to_list(departments_in_bytes_form)
+#list_of_departments=convert_list_of_list_to_single_list(list_of_list_of_departments,"text")
+list_of_courses=create_list_of_course_numbers(["ACMA"])
 list_of_sections=create_list_of_section_numbers(list_of_courses)
 final_list_for_export = []
 list_for_dictionary_key = []
 list_for_dictionary_value = []
 for c in range(len(list_of_sections)):
-   for d in range(len(list_of_sections[c][1])):
-       final_list_for_export.append(list_of_sections[c][0]+","+list_of_sections[c][1][d]+"\n")
-       list_for_dictionary_key.append(list_of_sections[c][0]+"-"+list_of_sections[c][1][d])
+   for d in range(len(list_of_sections[c][2])):
+       final_list_for_export.append(list_of_sections[c][0]+","+list_of_sections[c][1]+","+list_of_sections[c][2][d]+"\n")
+       list_for_dictionary_key.append(list_of_sections[c][0]+"-"+list_of_sections[c][1]+"-"+list_of_sections[c][2][d])
        #print(final_list_for_export)
 write_list_of_output_lines_to_file(final_list_for_export,"list_of_everything.csv")
 #dictionary_of_courses = {k:v for k,v in zip(list_for_dictionary_key,list_for_dictionary_value)}
