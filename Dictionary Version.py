@@ -22,6 +22,7 @@ def url_is_alive(url):
 def create_new_ldict(old_ldict, old_key, new_key):
     '''
     Function to build upon existing list of dictionary (eg. adds course numbers to ldict_dept, adds sections to ldict_dept_course)
+    Note: does not work for coure schedule because json from these sites are not lists of dictionaries
     @param old_ldict - current list of dictionary to be built upon
     @param old_key - key in SFU's json corresponding to value of interest
     @param new_key - key name chosen to correspond with value in new dictionaries
@@ -50,9 +51,18 @@ SFU_DATA_WEBSITE = "http://www.sfu.ca/bin/wcm/course-outlines?"+CURRENT_YEAR+"/"
 
 ldict_dept = create_new_ldict([{}], 'text', 'department')
 
-ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
+#ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
+ldict_dept_course = create_new_ldict([{'dept' : 'ACMA'}], 'text', 'course')
 
 ldict_dept_course_sect = create_new_ldict(ldict_dept_course, 'text', 'section')
 
+for dictionary in ldict_dept_course_sect:
+    webname = SFU_DATA_WEBSITE
+    for key in dictionary:
+        webname += dictionary[key] +'/'
+    if url_is_alive(webname):
+        unrefined_dict = get_data_from_url(webname)
+        dictionary['schedule'] = unrefined_dict['courseSchedule']
+ldict_dept_course_sect_sched = ldict_dept_course_sect
    
     
