@@ -53,5 +53,12 @@ for dictionary in ldict_dept:
         unrefined_list = get_data_from_url(webname)
         ldict_dept_course += get_values_from_ldict(unrefined_list, 'text', dictionary, 'course')
 
+ldict_dept_course_sect = []
+for dictionary in ldict_dept_course:
+    webname = SFU_DATA_WEBSITE + dictionary['department'] + '/' + dictionary['course'] + '/'
+    if url_is_alive(webname):
+        unrefined_list = get_data_from_url(webname)
+        ldict_dept_course_sect += get_values_from_ldict(unrefined_list, 'text', dictionary, 'sect')
+
     
     
