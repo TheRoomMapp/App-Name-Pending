@@ -1,0 +1,61 @@
+Room App TO-DOs
+
+Finding Data: 
+Use SFU API
+Create a spreadsheet based on this data to implement into our program 
+Ask for Blueprints (Nora)
+
+Room Criteria:
+
+Geographical area 
+Potentially locked rooms 
+Size of class 
+Amount of time it will be empty 
+
+
+SFU Room Finder Desktop:
+https://roomfinder.sfu.ca/apps/sfuroomfinder_desktop/public/
+
+Some facilities information:
+https://www.sfu.ca/fs/projects-initiatives/project-guides.html
+
+
+Javascript/HTML/CSS
+Learn...lol
+Start developing website 
+
+Departments data page: http://www.sfu.ca/bin/wcm/course-outlines?2018/fall
+To-do list:
+
+Manipulate courseSchedule - everyone 
+Save data into file (csv, json?) -Eric
+Rooms with events -later
+Save exceptions, manually debug, extend timeout error -Sean
+Front-end: (Nora, James, Sean, Eric, Cyndy)
+Learn django
+What sql
+
+
+To-do list:
+Dictionary version (saved as “Dictionary Version” in master branch):
+Test with full data set (I’ve only tested the code pulling course schedule using a sample data set)
+Function to save to file
+List of url’s causing errors
+Decide how to structure course schedule data
+Resolve issues in list_of_everything.csv and list_of_section_exceptions. For example:
+Why are most of the CA courses in list_of_everything.csv missing course numbers
+CA 357W should have course number D100 but it’s not on list_of_everything (http://www.sfu.ca/outlines.html?2018/fall/ca/357w/d100)
+Why is ‘CA Theatre II’ being recorded as a course (as seen on list_of_section_exceptions)
+Decrease time complexity
+Since our code is so slow, Eric added functions to save the data to CSV files so we only have to run the program once at the beginning of every semester but if you still want to work on making the code more efficient, I’ve listed some of my suggestions below
+While loop for search functions
+Avoid nested loops where possible (including loops that call functions that use loops)
+Consider how to mark rooms being used for events as “full”
+Increase time duration before time out error
+Send and receive data from website
+Create list(?) of when rooms are available
+
+
+
+
+
