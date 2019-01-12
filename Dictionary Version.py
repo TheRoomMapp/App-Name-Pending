@@ -51,8 +51,7 @@ SFU_DATA_WEBSITE = "http://www.sfu.ca/bin/wcm/course-outlines?"+CURRENT_YEAR+"/"
 
 ldict_dept = create_new_ldict([{}], 'text', 'department')
 
-#ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
-ldict_dept_course = create_new_ldict([{'department':'GERM'}], 'text', 'course')
+ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
 
 ldict_dept_course_sect = create_new_ldict(ldict_dept_course, 'text', 'section')
 
@@ -65,6 +64,3 @@ for dictionary in ldict_dept_course_sect:
         unrefined_dict = get_data_from_url(webname)
         ldict_sched += unrefined_dict['courseSchedule']
 
-#{mon:{time:[rooms]}}
-   
-    
