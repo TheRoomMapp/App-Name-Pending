@@ -39,3 +39,8 @@ Hey everyone I made a guide to walk us through the process of cloning and pushin
 - use git push
 - eg: $ git push
 - your files should have been sent to github 
+
+7. Merge your branch with changes on a different branch
+-make sure the 2 branches you want to merge have been pulled
+-cd into the branch you want to get changes into
+-$ git merge <branch name> where branch name is the name of the branch you want to get changes from
