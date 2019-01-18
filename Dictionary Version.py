@@ -44,6 +44,47 @@ def create_new_ldict(old_ldict, old_key, new_key):
 import urllib.request
 import json
 
+def all_considered_rooms(biglist):
+    room_dict={}
+    for dic in biglist:
+        for indict in dic['schedule']:
+            if 'buildingCode' in indict:
+                if indict['buildingCode'] not in room_dict:
+                    room_dict[indict['buildingCode']]=[]
+            if 'roomNumber' in indict:
+                if indict['roomNumber'] not in room_dict[indict['buildingCode']]:
+                    room_dict[indict['buildingCode']].append(indict['roomNumber'])
+    return room_dict
+                
+    
+
+def bookings_by_day(two_letter_weekday, biglist):
+    lstarttimes=['8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00',
+            '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
+    lendtimes=['8:20', '8:50', '9:20', '9:50', '10:20', '10:50', '11:20', '11:50', '12:20', '12:50', '13:20', '13:50', '14:20',
+               '14:50', '15:20', '15:50', '16:20', '16:50', '17:20', '17:50', '18:20', '18:50', '19:20', '19:50', '20:20']
+    dfull_by_time={'8:30':[], '9:00': [], '9:30': [], '10:00': [], '10:30': [], '11:00': [], '11:30': [], '12:00': [],
+                   '12:30': [], '13:00': [], '13:30': [], '14:00': [], '14:30': [], '15:00': [], '15:30': [], '16:00': [],
+                   '16:30': [], '17:00': [], '17:30': [], '18:00': [], '18:30': [], '19:00': [], '19:30': [], '20:00': []}
+    for dic in biglist:
+        for indict in dic['schedule']:
+            if indict['days']==two_letter_weekday:
+                startfound="nah"
+                endfound="nope"
+                check=0
+                while startfound=="nah" and check<len(lstarttimes):
+                    if indict['startTime']==lstarttimes[check]:
+                        startfound=lstarttimes[check]
+                    else: check+=1
+                checkend=0
+                while endfound=="nope" and checkend<len(lendtimes):
+                    if indict['endTime']==lendtimes[checkend]:
+                        endfound=lendtimes[checkend]
+                        for index in range(check, checkend):
+                             dfull_by_time[lstarttimes[index]].append(indict['buildingCode']+" "+indict['roomNumber'])
+                    checkend+=1
+    return dfull_by_time 
+
 #Top Level Variables
 CURRENT_YEAR = "2018"
 CURRENT_SEASON = "fall"
