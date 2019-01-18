@@ -43,12 +43,14 @@ def create_new_ldict(old_ldict, old_key, new_key):
 
 import urllib.request
 import json
+import time
 
 #Top Level Variables
 CURRENT_YEAR = "2018"
 CURRENT_SEASON = "fall"
 SFU_DATA_WEBSITE = "http://www.sfu.ca/bin/wcm/course-outlines?"+CURRENT_YEAR+"/"+CURRENT_SEASON+"/"
 
+start = time.time()
 ldict_dept = create_new_ldict([{}], 'text', 'department')
 
 ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
@@ -63,4 +65,6 @@ for dictionary in ldict_dept_course_sect:
     if url_is_alive(webname):
         unrefined_dict = get_data_from_url(webname)
         ldict_sched += unrefined_dict['courseSchedule']
+end = time.time()
+print(end,"-",start)
 
