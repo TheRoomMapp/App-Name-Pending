@@ -55,13 +55,12 @@ ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
 
 ldict_dept_course_sect = create_new_ldict(ldict_dept_course, 'text', 'section')
 
+ldict_sched = []
 for dictionary in ldict_dept_course_sect:
     webname = SFU_DATA_WEBSITE
     for key in dictionary:
         webname += dictionary[key] +'/'
     if url_is_alive(webname):
         unrefined_dict = get_data_from_url(webname)
-        dictionary['schedule'] = unrefined_dict['courseSchedule']
-ldict_dept_course_sect_sched = ldict_dept_course_sect
-   
-    
+        ldict_sched += unrefined_dict['courseSchedule']
+
