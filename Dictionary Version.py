@@ -52,13 +52,12 @@ def all_considered_rooms(biglist):
     room_dict={}
     lrooms=[]
     for dic in biglist:
-        for indict in dic['schedule']:
-            if 'buildingCode' in indict:
-                if indict['buildingCode'] not in room_dict:
-                    room_dict[indict['buildingCode']]=[]
-            if 'roomNumber' in indict:
-                if indict['roomNumber'] not in room_dict[indict['buildingCode']]:
-                    room_dict[indict['buildingCode']].append(indict['roomNumber'])
+        if 'buildingCode' in dic:
+            if dic['buildingCode'] not in room_dict:
+                room_dict[dic['buildingCode']]=[]
+        if 'roomNumber' in dic:
+            if dic['roomNumber'] not in room_dict[dic['buildingCode']]:
+                room_dict[dic['buildingCode']].append(dic['roomNumber'])
     
     for key in room_dict:
         for room in room_dict[key]:
@@ -79,22 +78,21 @@ def bookings_by_day(two_letter_weekday, biglist):
                    '12:30': [], '13:00': [], '13:30': [], '14:00': [], '14:30': [], '15:00': [], '15:30': [], '16:00': [],
                    '16:30': [], '17:00': [], '17:30': [], '18:00': [], '18:30': [], '19:00': [], '19:30': [], '20:00': []}
     for dic in biglist:
-        for indict in dic['schedule']:
-            if indict['days']==two_letter_weekday:
-                startfound="nah"
-                endfound="nope"
-                check=0
-                while startfound=="nah" and check<len(lstarttimes):
-                    if indict['startTime']==lstarttimes[check]:
-                        startfound=lstarttimes[check]
-                    else: check+=1
-                checkend=0
-                while endfound=="nope" and checkend<len(lendtimes):
-                    if indict['endTime']==lendtimes[checkend]:
-                        endfound=lendtimes[checkend]
-                        for index in range(check, checkend):
-                             dfull_by_time[lstarttimes[index]].append(indict['buildingCode']+" "+indict['roomNumber'])
-                    checkend+=1
+        if dic['days']==two_letter_weekday:
+            startfound="nah"
+            endfound="nope"
+            check=0
+            while startfound=="nah" and check<len(lstarttimes):
+                if dic['startTime']==lstarttimes[check]:
+                    startfound=lstarttimes[check]
+                else: check+=1
+            checkend=0
+            while endfound=="nope" and checkend<len(lendtimes):
+                if dic['endTime']==lendtimes[checkend]:
+                    endfound=lendtimes[checkend]
+                    for index in range(check, checkend):
+                         dfull_by_time[lstarttimes[index]].append(dic['buildingCode']+" "+dic['roomNumber'])
+                checkend+=1
     return dfull_by_time
 
 
