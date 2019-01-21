@@ -51,20 +51,25 @@ CURRENT_SEASON = "fall"
 SFU_DATA_WEBSITE = "http://www.sfu.ca/bin/wcm/course-outlines?"+CURRENT_YEAR+"/"+CURRENT_SEASON+"/"
 
 start = time.time()
-ldict_dept = create_new_ldict([{}], 'text', 'department')
+#ldict_dept = create_new_ldict([{}], 'text', 'department')
+ldict_dept = [{'department':'ARCH'}]
 
 ldict_dept_course = create_new_ldict(ldict_dept, 'text', 'course')
 
 ldict_dept_course_sect = create_new_ldict(ldict_dept_course, 'text', 'section')
 
 ldict_sched = []
+key_error_exceptions = []
 for dictionary in ldict_dept_course_sect:
     webname = SFU_DATA_WEBSITE
     for key in dictionary:
         webname += dictionary[key] +'/'
     if url_is_alive(webname):
         unrefined_dict = get_data_from_url(webname)
-        ldict_sched += unrefined_dict['courseSchedule']
+        try:
+            ldict_sched += unrefined_dict['courseSchedule']
+        except KeyError:
+            key_error_exceptions.append(webname)
+            
 end = time.time()
-print(end,"-",start)
-
+print("epoch time:",start,"-",end)
