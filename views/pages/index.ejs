@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Roominate, Roomour, RoomAPP, Roomba</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      </head>
+      <body>
+      
+      <div class="jumbotron text-center">
+        <h1>Find a SFU Burnaby Study Space</h1>
+        <p>Fall 2019 Edition</p> 
+      </div>
+
+
+      <h1>Find Any Free Room</h1>
+
+      <form id = "details" method="POST" action="/results">
+        <label for ="weekDay">Please select a weekday: </label>
+        <select id="Weekday" name="weekday">
+          <option value="Mo">Monday</option>
+          <option value="Tu">Tuesday</option>
+          <option value="We">Wednesday</option>
+          <option value="Th">Thursday</option>
+          <option value="Fr">Friday</option>
+        </select>
+            </br>
+        <label for="start">Select a start time between 8:30-20:30 </label>
+        <select id="start" name ="start">
+          <option value="8:30">08:30</option>      
+          <option value="9:00">09:00</option>      
+          <option value="9:30">09:30</option>      
+          <option value="10:00">10:00</option>      
+          <option value="10:30">10:30</option>      
+          <option value="11:00">11:00</option>      
+          <option value="11:30">11:30</option>      
+          <option value="12:00">12:00</option>      
+          <option value="12:30">12:30</option>      
+          <option value="13:00">13:00</option>      
+          <option value="13:30">13:30</option>      
+          <option value="14:00">14:00</option>      
+          <option value="14:30">14:30</option>      
+          <option value="15:00">15:00</option>      
+          <option value="15:30">15:30</option>      
+          <option value="16:00">16:00</option>      
+          <option value="16:30">16:30</option>      
+          <option value="17:00">17:00</option>      
+          <option value="17:30">17:30</option>      
+          <option value="18:00">18:00</option>      
+          <option value="18:30">18:30</option>      
+          <option value="19:00">19:00</option>      
+          <option value="19:30">19:30</option>      
+          <option value="20:00">20:00</option>      
+          <option value="20:30">20:30</option>      
+        </select>
+      </br>
+        <label for="end">Select a start time between 9:00-20:30 </label>
+        <select id="end" name ="end">
+          <option value="9:00">09:00</option>      
+          <option value="9:30">09:30</option>      
+          <option value="10:00">10:00</option>      
+          <option value="10:30">10:30</option>      
+          <option value="11:00">11:00</option>      
+          <option value="11:30">11:30</option>      
+          <option value="12:00">12:00</option>      
+          <option value="12:30">12:30</option>      
+          <option value="13:00">13:00</option>      
+          <option value="13:30">13:30</option>      
+          <option value="14:00">14:00</option>      
+          <option value="14:30">14:30</option>      
+          <option value="15:00">15:00</option>      
+          <option value="15:30">15:30</option>      
+          <option value="16:00">16:00</option>      
+          <option value="16:30">16:30</option>      
+          <option value="17:00">17:00</option>      
+          <option value="17:30">17:30</option>      
+          <option value="18:00">18:00</option>      
+          <option value="18:30">18:30</option>      
+          <option value="19:00">19:00</option>      
+          <option value="19:30">19:30</option>      
+          <option value="20:00">20:00</option>      
+          <option value="20:30">20:30</option>      
+        </select>
+            </br>
+        <input type="submit" value ="submit" onclick="validateOne()" />
+      </form>
+
+
+
+
+
+      <h1>Is a Specific Room Free?</h1>
+      <form id = "details" method="POST" action="/resultsTwo">
+        <label for ="weekDay">Please select a weekday: </label>
+        <select id="Weekday" name="weekday">
+          <option value="Mo">Monday</option>
+          <option value="Tu">Tuesday</option>
+          <option value="We">Wednesday</option>
+          <option value="Th">Thursday</option>
+          <option value="Fr">Friday</option>
+        </select>
+            </br>
+        <label for ="buildingNum">Please select the building: </label>
+        <select id="buildingNum" name="buildingNum">
+            <option value="AAB">AAB - Alcan Aquatic Research Center</option>
+            <option value="ALX">ALX - 611 Alexander</option>
+            <option value="AQ">AQ - Academic Quadrangle</option>
+            <option value="ASB">ASB - Applied Science Building</option>
+            <option value="BEE">Bee Research Building</option>
+            <option value="BFC">BFC - Beedie Field Concession</option>
+            <option value="BLU">BLU - Blusson Hall</option>
+            <option value="BRH">BRH - Barbara Rae House</option>
+            <option value="CCIC">CCIC - Charles Chang Innovation Centre</option>
+            <option value="CFD">CFD - Morris J Wosk Centre for Dialogue</option>
+            <option value="CML">CML - Convocation Mall</option>
+            <option value="DAC">DAC - Diamond Alumni Center</option>
+            <option value="DFA">DFA - Leslie & Gordon Diamond Family Auditorium</option>
+            <option value="DH">DH - Dining Hall</option>
+            <option value="DIS1">DIS1 - Discovery 1</option>
+            <option value="DIS2">DIS2 - Discovery 2</option>
+            <option value="ECC">ECC - EAST Concourse Cafeteria</option>
+            <option value="EDB">EDB - Education Building</option>
+            <option value="ETA">ETA - East Theatre Annex</option>
+            <option value="GAS">GAS - Service Station</option>
+            <option value="GCA">GAA - Goldcorp Centre for the Arts</option>
+            <option value="GH">GH - Greenhouse 1</option>
+            <option value="HAL">HAL - Halpern Centre</option>
+            <option value="HAM">HAM - Hamilton Hall</option>
+            <option value="HCC">HCC - Harbour Centre</option>
+            <option value="HCT">HCT - Harbour Centre Tower</option>
+            <option value="LDC">LDC - Lorne Davies Complex</option>
+            <option value="LIB">LIB - W.A.C. Bennett Library</option>
+            <option value="MBC">MMC - Mggie Benston Centre</option>
+            <option value="RCB">RCB - Robert C. Brown Hall</option>
+            <option value="SCB">SCB - Shrum Science Centre Biology</option>
+            <option value="SCC">SCC - Shrum Science Centre Chemistry</option>
+            <option value="SCK">SCK - Shrum Science Centre Kinesiology</option>
+            <option value="SCP">SCP - Shrum Science Centre Physics</option>
+            <option value="SECB">SECB - Southeast Classroom Block</option>
+            <option value="SEGAL">SEGAL - Segal Graduate School of Business</option>
+            <option value="SH">SH - Strand Hall</option>
+            <option value="SHA">SHA - Strand Hall Annex</option>
+            <option value="SRA">SRA - Science Research Annex</option>
+            <option value="SRYE">SRYC - Sustainable Energy and Engineering Building</option>
+            <option value="SSB">SSB - South Sciences Building</option>
+            <option value="SWH">SWH - Saywell Hall</option>
+            <option value="TASC1">TASC1 - Technology and Science Complex 1</option>
+            <option value="TASC2">TASC2 - Technology and Science Complex 2</option>
+            <option value="TO">TO - Trottier Observator</option>
+            <option value="WMC">WMC - West Mall Centre</option>
+        </select>
+          </br>
+        <label for="roomNum">Please enter the desired room number</label>
+        <input type="text" name ="roomNum" id="roomNum">
+            </br>
+        <label>Example rooms: AQ 5049, SWH 10051, BLU 10921</label>
+          </br>
+        <input type="submit" value ="submit" onclick ="validateTwo()" />
+      </form>
+
+
+
+
+
+
+
+
+      <script>
+        function validateOne()
+        {
+          var start = document.getElementById("start");
+          var startValue = start.options[start.selectedIndex].text;
+          var end = document.getElementById("end");
+          var endValue = end.options[end.selectedIndex].text;
+          if(startValue == endValue)
+          {
+            alert ( "Both time values are the same. Please select a different start and end time.");
+            event.preventDefault();
+          }
+          if(startValue > endValue)
+          {
+            alert ("You selected a start time that is after the end time. Please correct this and try again.")
+            event.preventDefault();
+          }
+        }
+
+        function validateTwo()
+        {
+          var textBox = document.getElementById("roomNum").value;
+
+          if (textBox =="")
+          {
+            alert("Please enter a room number and try again.")
+            event.preventDefault();
+          }
+
+        }
+
+      </script>
+
+</body>
+</html>
